@@ -64,3 +64,16 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## About project
+
+- Database
+
+Table name -manage
+
+- ID (char - 13) PK
+- Name (P1, P2, P3, P4)
+- EorI (boolean E = true, I = false)
+- Amount (Int)
+- Description (Text)
+- Date (time stamp)

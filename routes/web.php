@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\dataManage;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/new',[dataManage::class, 'newData']);
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return DB::select("select * from manage");
 });
+
+Route::view('/newInfo','new');
