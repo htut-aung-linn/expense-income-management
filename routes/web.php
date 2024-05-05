@@ -23,3 +23,9 @@ Route::get('/', function () {
 });
 
 Route::view('/newInfo','new');
+
+Route::get('/delete/{id}', [dataManage::class, 'del']);
+
+Route::get('/History',[dataManage::class,'initHistory']);
+
+Route::get('/more/{count}',[dataManage::class,'getMore']);
