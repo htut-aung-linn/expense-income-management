@@ -12,7 +12,7 @@
     <div class='n-gp'>
         <p class="h-label">Name</p>
         <div class='radio-gp'>
-            <input type="radio" id="p-1" name="p-name" value="p1">
+            <input type="radio" id="p-1" name="p-name" value="p1" checked>
             <label for="p-1">Father</label><br>
             <input type="radio" id="p-2" name="p-name" value="p2">
             <label for="p-2">Mother</label><br>
@@ -21,14 +21,14 @@
             <input type="radio" id="p-4" name="p-name" value="p4">
             <label for="p-4">Son</label><br><br><br>
 
-            <input  class="m-top" type="radio" id="expense" name="e-or-i" value="e">
+            <input  class="m-top" type="radio" id="expense" name="e-or-i" value="e" checked>
             <label for="expense">Expense</label><br>
             <input type="radio" id="income" name="e-or-i" value="i">
             <label for="income">Income</label><br>
         </div>
     </div>
     <label for="amount">Amount(MMK):</label>
-    <input class="f-w" type="number" id="amount" name="amount"><br><br>
+    <input class="f-w" type="number" id="amount" name="amount" required><br><br>
     <label for="des">Description:</label>
     <input class="f-w" type="text" id="des" name="description"><br><br>
 
@@ -89,6 +89,10 @@
     input[type="radio"] {
         width: 30px;
         height: 30px;
+    }
+
+    input[type="submit"] {
+        border-radius: 20px;
     }
 </style>
 </html>

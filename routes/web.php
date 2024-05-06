@@ -17,15 +17,14 @@ use App\Http\Controllers\dataManage;
 
 Route::post('/new',[dataManage::class, 'newData']);
 
-
-Route::get('/', function () {
-    return DB::select("select * from manage");
-});
-
 Route::view('/newInfo','new');
 
 Route::get('/delete/{id}', [dataManage::class, 'del']);
 
 Route::get('/History',[dataManage::class,'initHistory']);
 
-Route::get('/more/{count}',[dataManage::class,'getMore']);
+Route::get('/History/{count}',[dataManage::class,'getMore']);
+
+Route::get('/edit/{id}',[dataManage::class,'showEdit']);
+
+Route::get('/', [dataManage::class, 'showHome']);

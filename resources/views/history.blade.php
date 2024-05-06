@@ -14,9 +14,11 @@
         <x-item id="{{$item['ID']}}" name="{{$item['Name']}}"
         description="{{$item['Description']}}" amount="{{$item['Amount']}}" eori="{{$item['EorI']}}" date="{{$item['Date']}}"/>
     @endforeach
-    @if($count>5 && $count>$current)
+    @if($count>5 && $count>$current-5)
     <div id="more-gp">
-        <a href="more/{{$current}}"><p id="more">More</p></a>
+        
+        <a href="/History/{{$current}}"><p id="more">More</p></a>
+         
     </div>
     @endif
 </body>
@@ -79,8 +81,6 @@
         background-color: #42FF00;
 
     }
-    a{
-        decoration: none;
-    }
+
 </style>
 </html>

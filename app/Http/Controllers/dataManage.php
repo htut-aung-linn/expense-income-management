@@ -18,6 +18,21 @@ class dataManage extends Controller
         if($data["e-or-i"]=="i"){
             $eori = 0;
         }
+        $myfile = fopen("requireInfo.txt", "r") or die("Unable to open file!");
+        $total = fread($myfile,filesize("requireInfo.txt"));
+        fclose($myfile);
+                                
+        if($eori==0){
+            $total+=$data["amount"];
+        }else{
+            $total-=$data["amount"];
+        }
+
+        $myfile = fopen("requireInfo.txt", "w") or die("Unable to open file!");
+        
+        fwrite($myfile, $total);
+        fclose($myfile);
+
         $newM->Name = $data["p-name"];
         $newM->EorI = $eori;
         $newM->Amount = $data["amount"];
@@ -72,4 +87,78 @@ class dataManage extends Controller
         return view("history",["hdata"=>$array, "count" => $c, "current" => $count+5]);
     }
 
+    public function showEdit($id){
+        return $id;
+    }
+
+    public function showHome(Request $req){
+        
+        $d=strtotime("now");
+        $endDate = date("Y-m-d", $d);
+        $startDate =date("Y-m-d", strtotime("-1month",$d));
+
+        $in = $req->input();
+        if(count($in)>0){
+
+            $endDate = $in['toDate'];
+            $startDate = $in['fromDate'];
+        }
+        $myfile = fopen("requireInfo.txt", "r") or die("Unable to open file!");
+        $total = fread($myfile,filesize("requireInfo.txt"));
+        fclose($myfile);
+     
+        $requireData =  DB::select("SELECT `ID`, `Name`, `EorI`, `Amount` FROM `manage` WHERE `Date`>'".$startDate." 00:00:00' AND `Date`< '".$endDate." 23:59:59';");
+        $rdata = json_decode(json_encode($requireData), true);
+        $p1eamount = 0;
+        $p1iamount = 0;
+        $p2eamount = 0;
+        $p2iamount = 0;
+        $p3eamount = 0;
+        $p3iamount = 0;
+        $p4eamount = 0;
+        $p4iamount = 0;
+        foreach($rdata as $item){
+            if($item['Name']=='p1'){
+                if($item['EorI']=='1'){
+                    $p1eamount+=$item['Amount'];
+                }else{
+                    $p1iamount+=$item['Amount'];
+                }
+            }elseif($item['Name']=='p2'){
+                if($item['EorI']=='1'){
+                    $p2eamount+=$item['Amount'];
+                }else{
+                    $p2iamount+=$item['Amount'];
+                }
+            }elseif($item['Name']=='p3'){
+                if($item['EorI']=='1'){
+                    $p3eamount+=$item['Amount'];
+                }else{
+                    $p3iamount+=$item['Amount'];
+                }
+            }else{
+                if($item['EorI']=='1'){
+                    $p4eamount+=$item['Amount'];
+                }else{
+                    $p4iamount+=$item['Amount'];
+                }
+            }
+        }
+        $maxValue = max($p1eamount,$p1iamount,$p2eamount,$p2iamount,$p3eamount,$p3iamount,$p4eamount,$p4iamount);
+        $p1e = $p1eamount*100/$maxValue;
+        $p1i = $p1iamount*100/$maxValue;
+        $p2e = $p2eamount*100/$maxValue;
+        $p2i = $p2iamount*100/$maxValue;
+        $p3e = $p3eamount*100/$maxValue;
+        $p3i = $p3iamount*100/$maxValue;
+        $p4e = $p4eamount*100/$maxValue;
+        $p4i = $p4iamount*100/$maxValue;
+        echo $maxValue;
+        
+        return view("home",["total"=>$total,"p1e"=>$p1e,"p1i"=>$p1i, "p2e"=>$p2e,"p2i"=>$p2i
+    ,"p3e"=>$p3e,"p3i"=>$p3i,"p4e"=>$p4e,"p4i"=>$p4i,"startDate"=>$startDate,"endDate"=>$endDate, 'max'=>$maxValue]);
+    }
+    
+    
+    
 }
